@@ -114,7 +114,12 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 
 	@Override
 	public void insertAll(Collection<? extends E> coll) {
-
+		Object[] arr = coll.toArray();
+		
+		for(int i = 0; i < arr.length; i++)
+		{
+			insert((E) arr[i]);
+		}
 	}
 
 	@Override
@@ -125,7 +130,12 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 
 	@Override
 	public boolean isEmpty() {
-		//if (array.length
+		/*
+		 for (int i = 0; i < array.length; i++)
+		 {
+		 if(array[i] != 0) return false;
+		 }
+		 */
 		return false;
 	}
 
