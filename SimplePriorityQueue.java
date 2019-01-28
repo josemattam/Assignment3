@@ -21,25 +21,22 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 	}
 
 	/**
-	 * Retrieves, but does not remove, the minimum element in this priority
-	 * queue.
+	 * Retrieves, but does not remove, the minimum element in this priority queue.
 	 * 
 	 * @return the minimum element
 	 * @throws NoSuchElementException if the priority queue is empty
 	 */
 	@Override
 	public E findMin() throws NoSuchElementException {
-		
+
 		if (this.size() == 0)
 			throw new NoSuchElementException();
-		
+
 		// return array[array.length - 1];
 		E minVal = array[0];
-		
-		for (int i = 0; i < this.size(); i++)
-		{
-			if (comparator.compare(array[i], minVal) < 0)
-			{
+
+		for (int i = 0; i < this.size(); i++) {
+			if (comparator.compare(array[i], minVal) < 0) {
 				minVal = array[i];
 			}
 		}
@@ -57,10 +54,9 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 
 		if (this.size() == 0)
 			throw new NoSuchElementException();
-		//size--
-		E[] newArray = (E[]) new Object[array.length - 1]; 
-		for (int i = 0; i < newArray.length; i++)
-		{
+		// size--
+		E[] newArray = (E[]) new Object[array.length - 1];
+		for (int i = 0; i < newArray.length; i++) {
 			newArray[i] = array[i];
 		}
 		E minVal = array[array.length - 1];
@@ -69,55 +65,66 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 	}
 
 	/**
+	 * Inserts the specified element into this priority queue.
+	 * 
+	 * @param item - the element to insert
+	 */
+	@Override
+	public void insert(E item) {
+
+		// resize array by double
+
+		E[] newArray = array;
+
+		int index = binarySearch(this.array, item); // add comparator?
+
+		for (int i = 0; i < index; i++) {
+			newArray[i] = array[i];
+		}
+		newArray[index] = item;
+
+		for (int j = index + 1; j < array.length + 1; j++) {
+			newArray[j] = array[j];
+		}
+		array = newArray;
+		if (true) // if array is full, double in size
+		{
+
+		}
+	}
+
+	/**
+	 * 
+	 * @param array of elements
+	 * @param       item, element that it is searching for
+	 * @returns index of where the element fits
+	 */
+	public int binarySearch(E[] array, E item) // add a comparator into the parameter?
+	{
+		int low = 0, high = array.length - 1, mid = 0;
+		while (low <= high) {
+			mid = (low + high) / 2;
+			if (comparator.compare(item, array[mid + 1]) < 0 && comparator.compare(item, array[mid]) < 0)
+				return mid;
+			else if (comparator.compare(item, array[mid]) < 0)
+				high = mid - 1;
+			else
+				low = mid + 1;
+		}
+
+		return 0;
+	}
+
+	/**
 	 * Inserts the specified elements into this priority queue.
 	 * 
 	 * @param coll - the collection of elements to insert
 	 */
 	@Override
-	public void insert(E item) {
-		
-		// resize array by double
-		
-		E[] newArray = array;
-		
-		int index = binarySearch(this.array, item);
-		
-		for (int i = 0; i < index; i++)
-		{
-			newArray[i] = array[i];
-		}
-		newArray[index] = item;
-		
-		for (int j = index + 1; j < array.length + 1; j++)
-		{
-			newArray[j] = array[j];
-		}
-		array = newArray;
-	}
-	
-	
-	public int binarySearch (E[] array, E item)
-	{
-		int low = 0, high = array.length - 1, mid = 0;
-		while(low <= high) {
-			mid = (low + high) / 2;
-			if(comparator.compare(item, array[mid]) == 0) 
-				return mid;
-			else if(comparator.compare(item, array[mid]) < 0) 
-				high = mid - 1;
-			else 
-				low = mid + 1;
-		}
-		
-		return 0;
-	}
-
-	@Override
 	public void insertAll(Collection<? extends E> coll) {
 		Object[] arr = coll.toArray();
-		
-		for(int i = 0; i < arr.length; i++)
-		{
+
+		for (int i = 0; i < arr.length; i++) {
 			insert((E) arr[i]);
 		}
 	}
@@ -131,10 +138,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 	@Override
 	public boolean isEmpty() {
 		/*
-		 for (int i = 0; i < array.length; i++)
-		 {
-		 if(array[i] != 0) return false;
-		 }
+		 * for (int i = 0; i < array.length; i++) { if(array[i] != 0) return false; }
 		 */
 		return false;
 	}
@@ -146,7 +150,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 	}
 
 	/**
-	 * Comparator that defines an ordering among library books using the ISBN.
+	 * Comparator that defines an ordering among the elements in the array
 	 */
 	protected class RegularComparator implements Comparator<E> {
 
