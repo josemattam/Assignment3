@@ -32,6 +32,8 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 		
 		if (this.size() == 0)
 			throw new NoSuchElementException();
+		
+		// return array[array.length - 1];
 		E minVal = array[0];
 		
 		for (int i = 0; i < this.size(); i++)
@@ -55,7 +57,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 
 		if (this.size() == 0)
 			throw new NoSuchElementException();
-		
+		//size--
 		E[] newArray = (E[]) new Object[array.length - 1]; 
 		for (int i = 0; i < newArray.length; i++)
 		{
@@ -73,6 +75,9 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 	 */
 	@Override
 	public void insert(E item) {
+		
+		// resize array by double
+		
 		E[] newArray = array;
 		
 		int index = binarySearch(this.array, item);
@@ -114,13 +119,13 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
+		// return array.length;
 		return 0;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
+		//if (array.length
 		return false;
 	}
 
