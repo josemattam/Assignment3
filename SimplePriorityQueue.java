@@ -5,21 +5,30 @@ import java.util.NoSuchElementException;
 
 import java.util.Comparator;
 
-public class SimplePriorityQueue<E> implements PriorityQueue<E>, Comparable  {
+public class SimplePriorityQueue<E> implements PriorityQueue<E>, Comparable {
 
 	E[] array;
+
+	int size;
+
+	int capacity;
 
 	Comparator comparator;
 
 	public SimplePriorityQueue() {
 		array = (E[]) new Object[16];
-//		this.comparator = null;
+		this.size = 16;
+		this.capacity = 16;
+		this.comparator = null;
 
 	}
 
 	public SimplePriorityQueue(Comparator<? super E> comparator) {
 		array = (E[]) new Object[16];
+		this.size = 16;
 		this.comparator = comparator;
+		this.capacity = 16;
+
 	}
 
 	/**
@@ -33,16 +42,14 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>, Comparable  {
 
 		if (this.size() == 0)
 			throw new NoSuchElementException();
-
-		// return array[array.length - 1];
-		E minVal = array[0];
-
-		for (int i = 0; i < this.size(); i++) {
-			if (comparator.compare(array[i], minVal) < 0) {//use compareTo and check if comparator!= null
-				minVal = array[i];
-			}
-		}
-		return minVal;
+		return array[size];
+		/*
+		 * // return array[array.length - 1]; E minVal = array[0];
+		 * 
+		 * for (int i = 0; i < this.size(); i++) { if (comparator.compare(array[i],
+		 * minVal) < 0) {//use compareTo and check if comparator!= null minVal =
+		 * array[i]; } } return minVal;
+		 */
 	}
 
 	/**
@@ -56,14 +63,13 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>, Comparable  {
 
 		if (this.size() == 0)
 			throw new NoSuchElementException();
+		return array[size--];
 		// size--
-		E[] newArray = (E[]) new Object[array.length - 1];
-		for (int i = 0; i < newArray.length; i++) {
-			newArray[i] = array[i];
-		}
-		E minVal = array[array.length - 1];
-		array = newArray;
-		return minVal;
+		/*
+		 * E[] newArray = (E[]) new Object[array.length - 1]; for (int i = 0; i <
+		 * newArray.length; i++) { newArray[i] = array[i]; } E minVal =
+		 * array[array.length - 1]; array = newArray; return minVal;
+		 */
 	}
 
 	/**
@@ -80,19 +86,21 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>, Comparable  {
 
 		int index = binarySearch(this.array, item); // add comparator?
 
+		if (size == capacity)
+			capacity *= 2;
 		for (int i = 0; i < index; i++) {
 			newArray[i] = array[i];
+
 		}
 		newArray[index] = item;
+		size++;
 
 		for (int j = index + 1; j < array.length + 1; j++) {
 			newArray[j] = array[j];
-		}
-		array = newArray;
-		if (true) // if array is full, double in size
-		{
 
 		}
+		array = newArray;
+
 	}
 
 	/**
@@ -133,40 +141,48 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>, Comparable  {
 
 	@Override
 	public int size() {
-		// return array.length;
-		return 0;
+		return this.size;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		/*
-		 * for (int i = 0; i < array.length; i++) { if(array[i] != 0) return false; }
-		 */
-		return false;
+
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] != null)
+				return false;
+		}
+
+		return true;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+		
+		this.size= 0;
+		array[0] = null;
 
 	}
 
 	/**
 	 * Comparator that defines an ordering among the elements in the array
 	 */
+	
 	protected class RegularComparator implements Comparator<E> {
 
 		@Override
 		public int compare(E lhs, E rhs) {
-			return 0;// lhs > rhs ? 1 : (lhs < rhs ? -1 : 0);
+			//return 0;// lhs > rhs ? 1 : (lhs < rhs ? -1 : 0);
+			if (lhs instanceof String)
+				return String.valueOf(lhs).compareTo(String.valueOf(rhs));
+			return lhs - rhs;
 
 		}
 
 	}
+	
 
 	@Override
 	public int compareTo(Object o) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 }
