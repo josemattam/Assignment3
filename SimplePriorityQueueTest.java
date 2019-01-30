@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.oracle.tools.packager.RelativeFileSet.Type;
+
 class SimplePriorityQueueTest {
 
 	private ArrayList<Integer> arrInt;
@@ -106,6 +108,13 @@ class SimplePriorityQueueTest {
 		assertEquals(8, (int) intQueue.findMin());	
 	}
 	
+	@Test
+	public void insertAllTestInteger() {
+		SimplePriorityQueue<Integer> testQ = new SimplePriorityQueue<Integer>();
+		
+		testQ.insertAll(arrInt);
+		assertEquals(3, testQ.size());
+	}
 	
 	
 

@@ -95,7 +95,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>, Comparable {
 		newArray[index] = item;
 		size++;
 
-		for (int j = index + 1; j < array.length + 1; j++) {
+		for (int j = index + 1; j < size + 1; j++) {
 			newArray[j] = array[j];
 
 		}
@@ -106,7 +106,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>, Comparable {
 	/**
 	 * 
 	 * @param array of elements
-	 * @param       item, element that it is searching for
+	 * @param item, element that it is searching for
 	 * @returns index of where the element fits
 	 */
 	public int binarySearch(E[] array, E item) // add a comparator into the parameter?
@@ -134,7 +134,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>, Comparable {
 	public void insertAll(Collection<? extends E> coll) {
 		Object[] arr = coll.toArray();
 
-		for (int i = 0; i < arr.length; i++) {
+		for (int i = 0; i < size; i++) {
 			insert((E) arr[i]);
 		}
 	}
@@ -147,7 +147,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>, Comparable {
 	@Override
 	public boolean isEmpty() {
 
-		for (int i = 0; i < array.length; i++) {
+		for (int i = 0; i < size; i++) {
 			if (array[i] != null)
 				return false;
 		}
@@ -157,8 +157,8 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>, Comparable {
 
 	@Override
 	public void clear() {
-		
-		this.size= 0;
+
+		this.size = 0;
 		array[0] = null;
 
 	}
@@ -166,20 +166,22 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>, Comparable {
 	/**
 	 * Comparator that defines an ordering among the elements in the array
 	 */
-	
+
 	protected class RegularComparator implements Comparator<E> {
 
 		@Override
 		public int compare(E lhs, E rhs) {
-			//return 0;// lhs > rhs ? 1 : (lhs < rhs ? -1 : 0);
+			// return 0;// lhs > rhs ? 1 : (lhs < rhs ? -1 : 0);
 			if (lhs instanceof String)
 				return String.valueOf(lhs).compareTo(String.valueOf(rhs));
-			return lhs - rhs;
+			if (lhs instanceof Integer) {
+				return (int) lhs - (int) rhs;
+			}
+			return 0;
 
 		}
 
 	}
-	
 
 	@Override
 	public int compareTo(Object o) {
