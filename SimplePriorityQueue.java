@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 
 import java.util.Comparator;
 
-public class SimplePriorityQueue<E> implements PriorityQueue<E> {
+public class SimplePriorityQueue<E> implements PriorityQueue<E>, Comparable  {
 
 	E[] array;
 
@@ -13,6 +13,8 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 
 	public SimplePriorityQueue() {
 		array = (E[]) new Object[16];
+//		this.comparator = null;
+
 	}
 
 	public SimplePriorityQueue(Comparator<? super E> comparator) {
@@ -36,7 +38,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 		E minVal = array[0];
 
 		for (int i = 0; i < this.size(); i++) {
-			if (comparator.compare(array[i], minVal) < 0) {
+			if (comparator.compare(array[i], minVal) < 0) {//use compareTo and check if comparator!= null
 				minVal = array[i];
 			}
 		}
@@ -160,5 +162,11 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 
 		}
 
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
