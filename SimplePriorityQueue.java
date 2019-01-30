@@ -17,15 +17,15 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>, Comparable {
 
 	public SimplePriorityQueue() {
 		array = (E[]) new Object[16];
-		this.size = 16;
+		this.size = 0;
 		this.capacity = 16;
-		this.comparator = null;
+		this.comparator = new RegularComparator();
 
 	}
 
 	public SimplePriorityQueue(Comparator<? super E> comparator) {
 		array = (E[]) new Object[16];
-		this.size = 16;
+		this.size = 0;
 		this.comparator = comparator;
 		this.capacity = 16;
 
@@ -111,7 +111,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>, Comparable {
 	 */
 	public int binarySearch(E[] array, E item) // add a comparator into the parameter?
 	{
-		int low = 0, high = array.length - 1, mid = 0;
+		int low = 0, high = size - 1, mid = 0;
 		while (low <= high) {
 			mid = (low + high) / 2;
 			if (comparator.compare(item, array[mid + 1]) < 0 && comparator.compare(item, array[mid]) < 0)
