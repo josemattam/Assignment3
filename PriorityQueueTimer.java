@@ -85,7 +85,7 @@ public class PriorityQueueTimer {
 		
 		double averageTime = ((midpointTime - startTime) - (stopTime - midpointTime)) / (double) timesToLoop;
 
-		System.out.println("INSERT\t" + size + "\t" + averageTime);
+		System.out.print("INSERT\t" + size + "\t" + averageTime + "\t");
 		
 		return testQ;
 	}
