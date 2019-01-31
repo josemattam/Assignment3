@@ -8,6 +8,12 @@ import java.util.NoSuchElementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests that test the genericness of our SimplePriorityQueue
+ * 
+ * @author Mikey Jeanson and Jose Mattam
+ *
+ */
 class SimplePriorityQueueTest {
 
 	private ArrayList<Integer> arrInt;
