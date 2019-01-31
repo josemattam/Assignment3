@@ -7,19 +7,19 @@ import java.util.Comparator;
 
 public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 
-	E[] array;
+	private E[] array;
 
-	int size;
+	private int size;
 
-	int capacity;
+	private int capacity;
 
-	Comparator comparator;
+	private Comparator comparator;
 
 	public SimplePriorityQueue() {
 		array = (E[]) new Object[16];
 		this.size = 0;
 		this.capacity = 16;
-		this.comparator = null;
+		this.comparator = new RegularComparator();
 
 	}
 
@@ -110,7 +110,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 	 * @returns index of where the element fits
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public int binarySearch(E[] array, E item) // add a comparator into the parameter?
+	public int binarySearch(E[] array, E item)
 	{
 		if (size == 1)
 			return 0;
@@ -118,7 +118,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 
 		while (low <= high) {
 			if (low == high)
-				if (((Comparable) item).compareTo(array[mid]) < 0)
+				if (comparator.compare(item, array[mid]) < 0)	//(((Comparable) item).compareTo(array[mid]) < 0)
 					return high;
 				else {
 					if (high <= 0)
@@ -130,11 +130,15 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 			if (high == size)
 				return size;
 			mid = (low + high) / 2;
-			if (((Comparable) item).compareTo(array[mid]) < 0) {
+			if (comparator.compare(item, array[mid]) < 0) 	//(((Comparable) item).compareTo(array[mid]) < 0) 
+			{
 				low = mid + 1;
-			} else if (((Comparable) item).compareTo(array[mid]) > 0) {
+			} 
+			else if (comparator.compare(item, array[mid]) > 0)	// (((Comparable) item).compareTo(array[mid]) > 0)
+			{
 				high = mid - 1;
-			} else
+			} 
+			else
 				return mid;
 		}
 
@@ -184,20 +188,15 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 	/**
 	 * Comparator that defines an ordering among the elements in the array
 	 */
-
+	
 	protected class RegularComparator implements Comparator<E> {
-
+		
+		@SuppressWarnings({ "unchecked", "rawtypes"})
 		@Override
 		public int compare(E lhs, E rhs) {
-			// return 0;// lhs > rhs ? 1 : (lhs < rhs ? -1 : 0);
-			if (lhs instanceof String)
-				return String.valueOf(lhs).compareTo(String.valueOf(rhs));
-			if (lhs instanceof Integer) {
-				return (int) lhs - (int) rhs;
-			}
-			return 0;
-
+			
+			return ((Comparable) lhs).compareTo(rhs);
 		}
 
-	}
+	
 }
