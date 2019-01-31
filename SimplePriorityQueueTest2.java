@@ -4,10 +4,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.GregorianCalendar;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import assign02.LibraryBookGeneric;
 
 class SimplePriorityQueueTest2<E> {
 
@@ -133,6 +136,22 @@ class SimplePriorityQueueTest2<E> {
 		assertEquals(5.0, testQ.size());
 	}
 
+	public void capacityTest() {
+		ArrayList<Integer> testQ = new ArrayList<>();
+		SimplePriorityQueue<Integer> testP = new SimplePriorityQueue<Integer>();
+		Random rng = new Random();
+		int min = Integer.MAX_VALUE;
+
+		for (int i = 0; i < 101; i++) {
+			int inp = rng.nextInt();
+			min = Math.max(min, inp);
+			testQ.add(inp);
+		}
+		testP.insertAll(testQ);
+		assertEquals(100, testP.size());
+		assertEquals(min, (int) testP.findMin());
+	}
+
 	@Test
 	public void findMinTestDouble2() {
 		SimplePriorityQueue<Double> testQ = new SimplePriorityQueue<Double>();
@@ -146,7 +165,7 @@ class SimplePriorityQueueTest2<E> {
 	}
 
 	@Test
-	void insertDoubleTest() {
+	public void insertDoubleTest() {
 		SimplePriorityQueue<Double> testQ = new SimplePriorityQueue<Double>();
 
 		testQ.insert(1.0);
@@ -209,7 +228,7 @@ class SimplePriorityQueueTest2<E> {
 	}
 
 	@Test
-	void insertAllStringTest() {
+	public void insertAllStringTest() {
 		ArrayList<String> testQ = new ArrayList<>();
 		SimplePriorityQueue<String> testP = new SimplePriorityQueue<String>();
 
@@ -243,7 +262,7 @@ class SimplePriorityQueueTest2<E> {
 	}
 
 	@Test
-	void insertAllGregorianTest() {
+	public void insertAllGregorianTest() {
 		ArrayList<GregorianCalendar> testQ = new ArrayList<>();
 		SimplePriorityQueue<GregorianCalendar> testP = new SimplePriorityQueue<GregorianCalendar>();
 
@@ -256,5 +275,9 @@ class SimplePriorityQueueTest2<E> {
 		testP.insertAll(testQ);
 		assertEquals(3, testP.size());
 		assertEquals(d1, testP.findMin());
+	}
+
+	@Test
+	public void testLibrary() {
 	}
 }
