@@ -8,6 +8,9 @@ import java.util.Comparator;
 /**
  * Resizable-array where the generic elements are placed in ascending order of
  * priority. SimplePriorityQueue prioritizes the least valued elements.
+ * 
+ * @author Michael Jeanson and Jose Mattam
+ * @version January 16, 2019
  */
 public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 
