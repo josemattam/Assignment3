@@ -94,8 +94,8 @@ class SimplePriorityQueueTest {
 	
 	@Test
 	public void findMinTestDouble() {
-		int actual = doubleQueue.findMin();
-		assertEquals(5, actual);
+		double actual = doubleQueue.findMin();
+		assertEquals(2.0, actual);
 	}
 
 	@Test
