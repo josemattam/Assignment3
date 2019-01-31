@@ -5,6 +5,10 @@ import java.util.NoSuchElementException;
 
 import java.util.Comparator;
 
+/**
+ * Resizable-array where the generic elements are placed in ascending order of
+ * priority. SimplePriorityQueue prioritizes the least valued elements.
+ */
 public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 
 	private E[] array;
@@ -16,7 +20,8 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 	private Comparator comparator;
 
 	/**
-	 * Creates a new SimplePriorityQueue. The elements are ordered using their natural ordering.
+	 * Creates a new SimplePriorityQueue. The elements are ordered using their
+	 * natural ordering.
 	 */
 	public SimplePriorityQueue() {
 		array = (E[]) new Object[16];
@@ -26,7 +31,9 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 	}
 
 	/**
-	 * Creates a new SimplePriorityQueue. The elements are ordered using the provided Comparator object.
+	 * Creates a new SimplePriorityQueue. The elements are ordered using the
+	 * provided Comparator object.
+	 * 
 	 * @param comparator
 	 */
 	public SimplePriorityQueue(Comparator<? super E> comparator) {
@@ -77,42 +84,36 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 		E[] newArray = (E[]) new Object[capacity];
 		size++;
 		int index = binarySearch(this.array, item);
-		
+
 		if (size == capacity)
 			capacity *= 2;
-		for (int i = 0; i < index; i++) 
-		{
+		for (int i = 0; i < index; i++) {
 			newArray[i] = array[i];
 		}
 		newArray[index] = item;
-		
-		for (int j = index + 1; j < size; j++)
-		{
+
+		for (int j = index + 1; j < size; j++) {
 			newArray[j] = array[j - 1];
 		}
 		array = newArray;
 	}
 
 	/**
-	 * @param	array of elements
-	 * @param 	item, element that it is searching for
+	 * @param array of elements
+	 * @param       item, element that it is searching for
 	 * @returns index of where the element fits in the Priority Queue
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private int binarySearch(E[] array, E item)
-	{
+	private int binarySearch(E[] array, E item) {
 		if (size == 1)
 			return 0;
 		int high = size - 1, low = 0, mid = 0;
 
-		while (low <= high)
-		{
-			if (low == high)
-			{
+		while (low <= high) {
+			if (low == high) {
 				if (comparator.compare(item, array[mid]) < 0)
 					return high;
-				else
-				{
+				else {
 					if (high <= 0)
 						return 0;
 					return high - 1;
@@ -123,16 +124,11 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 			if (high == size)
 				return size;
 			mid = (low + high) / 2;
-			if (comparator.compare(item, array[mid]) < 0)
-			{
+			if (comparator.compare(item, array[mid]) < 0) {
 				low = mid + 1;
-			} 
-			else if (comparator.compare(item, array[mid]) > 0)
-			{
+			} else if (comparator.compare(item, array[mid]) > 0) {
 				high = mid - 1;
-			} 
-			else
-			{
+			} else {
 				return mid;
 			}
 		}
@@ -153,7 +149,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 			insert((E) arr[i]);
 		}
 	}
-	
+
 	/**
 	 * @return the number of elements in this priority queue
 	 */
@@ -168,8 +164,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 	@Override
 	public boolean isEmpty() {
 
-		for (int i = 0; i < size; i++)
-		{
+		for (int i = 0; i < size; i++) {
 			if (array[i] != null)
 				return false;
 		}
@@ -177,8 +172,8 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 	}
 
 	/**
-	 * Removes all of the elements from this priority queue. The queue will be
-	 * empty when this call returns.
+	 * Removes all of the elements from this priority queue. The queue will be empty
+	 * when this call returns.
 	 */
 	@Override
 	public void clear() {
@@ -190,14 +185,11 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 	/**
 	 * Comparator that defines an ordering among the elements in the array
 	 */
-	protected class RegularComparator implements Comparator<E> 
-	{
+	protected class RegularComparator implements Comparator<E> {
 		@SuppressWarnings("unchecked")
 		@Override
-		public int compare(E lhs, E rhs) 
-		{
+		public int compare(E lhs, E rhs) {
 			return ((Comparable<? super E>) lhs).compareTo(rhs);
 		}
 	}
 }
-
