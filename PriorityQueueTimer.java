@@ -15,7 +15,7 @@ public class PriorityQueueTimer {
 		int timesToLoop = 10000;
 
 		// For each problem size n . . .
-		for (int n = 100000; n <= 2000000; n += 100000) {
+		for (int n = 10000; n <= 2000000; n += 100000) {
 
 			SimplePriorityQueue<Integer> testQ = generateQueue(n);
 
@@ -34,6 +34,11 @@ public class PriorityQueueTimer {
 			}
 
 			midpointTime = System.nanoTime();
+			
+			// Run an empty loop to capture the cost of running the loop.
+
+			for(long i = 0; i < timesToLoop; i++) { // empty block
+			}
 
 			stopTime = System.nanoTime();
 
@@ -42,7 +47,7 @@ public class PriorityQueueTimer {
 			// Average it over the number of runs.
 			double averageTime = ((midpointTime - startTime) - (stopTime - midpointTime)) / (double) timesToLoop;
 
-			System.out.println(n + "\t" + averageTime);
+			System.out.println("findMIN\t" + n + "\t" + averageTime);
 		}
 	}
 
@@ -50,9 +55,38 @@ public class PriorityQueueTimer {
 		SimplePriorityQueue<Integer> testQ = new SimplePriorityQueue<Integer>();
 		Random rng = new Random();
 
-		for (int i = 0; i <= size; i++) {
+		int timesToLoop = 10000;
+		
+		for (int i = 0; i <= size - 1; i++) {
+
 			testQ.insert(rng.nextInt());
 		}
+
+		long startTime, midpointTime, stopTime;
+
+		startTime = System.nanoTime();
+		while (System.nanoTime() - startTime < 1000000000) { // empty block
+		}
+		startTime = System.nanoTime();
+		
+		//timing this operation
+		// Run an empty loop to capture the cost of running the loop.
+
+		for(long i = 0; i < timesToLoop; i++) { // empty block
+			testQ.insert(rng.nextInt());
+		}
+
+		midpointTime = System.nanoTime();
+		
+		for(long i = 0; i < timesToLoop; i++) { // empty block
+		}
+
+		stopTime = System.nanoTime();
+		
+		double averageTime = ((midpointTime - startTime) - (stopTime - midpointTime)) / (double) timesToLoop;
+
+		System.out.println("INSERT\t" + size + "\t" + averageTime);
+		
 		return testQ;
 	}
 }
