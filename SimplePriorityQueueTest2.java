@@ -21,7 +21,6 @@ class SimplePriorityQueueTest2<E> {
 	private SimplePriorityQueue<Long> longQueue;
 	private SimplePriorityQueue<String> strQueue;
 	private SimplePriorityQueue<GregorianCalendar> gcQ;
-	
 
 	@BeforeEach
 	public void setUp() {
@@ -54,11 +53,11 @@ class SimplePriorityQueueTest2<E> {
 		arrStr.add("book");
 		strQueue = new SimplePriorityQueue<>();
 		strQueue.insertAll(arrStr);
-		
+
 		arrGC = new ArrayList<>();
 		GregorianCalendar d1 = new GregorianCalendar(1999, 5, 11);
-		GregorianCalendar d2 = new GregorianCalendar(2004, 25, 12);
 		GregorianCalendar d3 = new GregorianCalendar(2013, 18, 9);
+		GregorianCalendar d2 = new GregorianCalendar(2004, 25, 12);
 		arrGC.add(d2);
 		arrGC.add(d3);
 		arrGC.add(d1);
@@ -156,7 +155,7 @@ class SimplePriorityQueueTest2<E> {
 		testQ.deleteMin();
 		assertEquals(1, testQ.size());
 	}
-	
+
 	@Test
 	public void findMinString() {
 		assertEquals("12Stars", (String) strQueue.findMin());
@@ -179,7 +178,7 @@ class SimplePriorityQueueTest2<E> {
 	@Test
 	public void insertOrderTestString() {
 		strQueue.clear();
-		strQueue.insert("ooo");	
+		strQueue.insert("ooo");
 		strQueue.insert("o");
 		strQueue.insert("oo");
 		assertEquals("o", (String) strQueue.findMin());
@@ -212,7 +211,7 @@ class SimplePriorityQueueTest2<E> {
 	@Test
 	void insertAllStringTest() {
 		ArrayList<String> testQ = new ArrayList<>();
-		SimplePriorityQueue<String> testP= new SimplePriorityQueue<String>();
+		SimplePriorityQueue<String> testP = new SimplePriorityQueue<String>();
 
 		testQ.add("ooooo");
 		testQ.add("ooo");
@@ -223,7 +222,7 @@ class SimplePriorityQueueTest2<E> {
 		assertEquals(5.0, testP.size());
 		assertEquals("o", testP.findMin());
 	}
-	
+
 	@Test
 	public void findMinGregorian() {
 		assertEquals(new GregorianCalendar(1999, 5, 11), (GregorianCalendar) gcQ.findMin());
@@ -232,62 +231,30 @@ class SimplePriorityQueueTest2<E> {
 	@Test
 	public void deleteMinGregorian() {
 		assertEquals(new GregorianCalendar(1999, 5, 11), (GregorianCalendar) gcQ.deleteMin());
-		assertEquals(2, strQueue.size());
+		assertEquals(2, gcQ.size());
 	}
 
 	@Test
 	public void clearGregorian() {
 		gcQ.clear();
 		assertThrows(NoSuchElementException.class, () -> {
-			doubleQueue.findMin();
+			gcQ.findMin();
 		});
 	}
 
 	@Test
-	public void insertOrderTestGregorian() {
-		strQueue.clear();
-		strQueue.insert("ooo");	
-		strQueue.insert("o");
-		strQueue.insert("oo");
-		assertEquals("o", (String) strQueue.findMin());
-	}
-
-	@Test
-	public void insertTestGregorian() {
-		SimplePriorityQueue<String> testQ = new SimplePriorityQueue<String>();
-
-		testQ.insert("ooooo");
-		testQ.insert("ooo");
-		testQ.insert("oooo");
-		testQ.insert("oo");
-		testQ.insert("o");
-		assertEquals(5.0, testQ.size());
-	}
-
-	@Test
-	public void findMinTestGregorian() {
-		SimplePriorityQueue<String> testQ = new SimplePriorityQueue<String>();
-
-		testQ.insert("ooooo");
-		testQ.insert("ooo");
-		testQ.insert("oooo");
-		testQ.insert("oo");
-		testQ.insert("o");
-		assertEquals("o", (String) testQ.findMin());
-	}
-
-	@Test
 	void insertAllGregorianTest() {
-		ArrayList<String> testQ = new ArrayList<>();
-		SimplePriorityQueue<String> testP= new SimplePriorityQueue<String>();
+		ArrayList<GregorianCalendar> testQ = new ArrayList<>();
+		SimplePriorityQueue<GregorianCalendar> testP = new SimplePriorityQueue<GregorianCalendar>();
 
-		testQ.add("ooooo");
-		testQ.add("ooo");
-		testQ.add("oooo");
-		testQ.add("oo");
-		testQ.add("o");
+		GregorianCalendar d1 = new GregorianCalendar(1999, 5, 11);
+		GregorianCalendar d3 = new GregorianCalendar(2013, 18, 9);
+		GregorianCalendar d2 = new GregorianCalendar(2004, 25, 12);
+		testQ.add(d1);
+		testQ.add(d3);
+		testQ.add(d2);
 		testP.insertAll(testQ);
-		assertEquals(5.0, testP.size());
-		assertEquals("o", testP.findMin());
+		assertEquals(3, testP.size());
+		assertEquals(d1, testP.findMin());
 	}
 }
